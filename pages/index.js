@@ -82,14 +82,16 @@ export default function Home() {
     try {
       const signer = await getProviderOrSigner(true);
       const daoContract = getDaoContractInstance(signer);
-      const txn = await daoContract.createProposal(fakeNftTokenId);
+      const txn = await daoContract.createProposal(fakeNftTokenId, {
+        gasLimit: 3000000,
+      });
       setLoading(true);
       await txn.wait();
       await getNumProposalsInDAO();
       setLoading(false);
     } catch (error) {
       console.error(error);
-      window.alert(error.data.message);
+      window.alert(error.message);
     }
   };
 
@@ -146,7 +148,7 @@ export default function Home() {
       await fetchAllProposals();
     } catch (error) {
       console.error(error);
-      window.alert(error.data.message);
+      window.alert(error.message);
     }
   };
 
@@ -163,7 +165,7 @@ export default function Home() {
       await fetchAllProposals();
     } catch (error) {
       console.error(error);
-      window.alert(error.data.message);
+      window.alert(error.message);
     }
   };
 
